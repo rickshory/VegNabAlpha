@@ -14,7 +14,8 @@ import com.rickshory.vegnabalpha.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        const val TAG = "MainFragment"
+        const val SIGN_IN_RESULT_CODE = 1001
     }
 
     private lateinit var viewModel: MainViewModel
