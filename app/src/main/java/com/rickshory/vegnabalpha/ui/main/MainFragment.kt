@@ -28,6 +28,8 @@ class MainFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
+        binding.authButton.text = getString(R.string.login_button_text)
+
         return binding.root
     }
 
