@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import com.rickshory.vegnabalpha.R
 import com.rickshory.vegnabalpha.data.LoginViewModel
 import com.rickshory.vegnabalpha.databinding.FragmentMainBinding
@@ -41,6 +43,46 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    /**
+     * Observes the authentication state and changes the UI accordingly.
+     * If there is a logged in user: (1) show a logout button and (2) display their name.
+     * If there is no logged in user: show a login button
+     */
+    private fun observeAuthenticationState() {
+//        val noteToDisplay = viewModel.getNoteToDisplay(requireContext())
+        val noteToDisplay =""
+
+            viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when (authenticationState) {
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> {
+                    binding.userText.text = getUserPersonalization(noteToDisplay)
+
+                    binding.authButton.text = getString(R.string.logout_button_text)
+                    binding.authButton.setOnClickListener {
+                        AuthUI.getInstance().signOut(requireContext())
+                    }
+                }
+                else -> {
+                    binding.userText.text = getString(R.string.message_noauth)
+
+                    binding.authButton.text = getString(R.string.login_button_text)
+                    binding.authButton.setOnClickListener {
+                        launchSignInFlow()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun getUserPersonalization(optionalNote: String): String {
+        return String.format(
+            resources.getString(
+                R.string.user_message_authed,
+                FirebaseAuth.getInstance().currentUser?.displayName, optionalNote)
+            )
+        )
     }
 
     private fun launchSignInFlow() {
