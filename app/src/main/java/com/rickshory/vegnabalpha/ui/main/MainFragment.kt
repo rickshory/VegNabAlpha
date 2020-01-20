@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.rickshory.vegnabalpha.R
+import com.rickshory.vegnabalpha.data.LoginViewModel
 import com.rickshory.vegnabalpha.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -18,7 +19,8 @@ class MainFragment : Fragment() {
         const val SIGN_IN_RESULT_CODE = 1001
     }
 
-    private lateinit var viewModel: MainViewModel
+    // Get a reference to the ViewModel scoped to this Fragment
+    private val viewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
@@ -28,6 +30,7 @@ class MainFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
+        // TODO Remove the line below when observeAuthenticationState is implemented
         binding.authButton.text = getString(R.string.login_button_text)
 
         return binding.root
