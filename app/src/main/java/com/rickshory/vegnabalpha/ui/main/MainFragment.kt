@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.firebase.ui.auth.AuthUI
 import com.rickshory.vegnabalpha.R
 import com.rickshory.vegnabalpha.data.LoginViewModel
 import com.rickshory.vegnabalpha.databinding.FragmentMainBinding
@@ -42,4 +43,26 @@ class MainFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    private fun launchSignInFlow() {
+        // Give users the option to sign in / register with their email
+        // or Google account.
+        // If users choose to register with their email,
+        // they will need to create a password as well
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+            // Can provide more ways to register & sign in here
+        )
+
+        // Create and launch sign-in intent.
+        // We listen to the response of this activity with the
+        // SIGN_IN_RESULT_CODE code
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+            SIGN_IN_RESULT_CODE
+        )
+    }
 }
