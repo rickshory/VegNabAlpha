@@ -43,10 +43,10 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeAuthenticationState()
+        binding.authButton.setOnClickListener { launchSignInFlow() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -103,8 +103,8 @@ class MainFragment : Fragment() {
         return String.format(
             resources.getString(
                 R.string.user_message_authed,
-                FirebaseAuth.getInstance().currentUser?.displayName, optionalNote)
-            )
+                FirebaseAuth.getInstance().currentUser?.displayName,
+                optionalNote)
         )
     }
 
