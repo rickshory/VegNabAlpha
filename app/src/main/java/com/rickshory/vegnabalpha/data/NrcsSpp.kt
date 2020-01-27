@@ -1,4 +1,4 @@
-package com.rickshory.vegnabalpha.data.source
+package com.rickshory.vegnabalpha.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
