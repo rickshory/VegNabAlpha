@@ -2,6 +2,7 @@ package com.rickshory.vegnabalpha.data.source
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Fts4
 import androidx.room.PrimaryKey
 
 /**
@@ -15,9 +16,10 @@ import androidx.room.PrimaryKey
  * @param vernacular common names(s) of the plant
  */
 
+@Fts4
 @Entity(tableName = "nrcsspp")
 data class NrcsSpp @JvmOverloads constructor  (
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sppid") var id: Int = 0,
+//    @PrimaryKey @ColumnInfo(name = "rowid") val id: Int, // understood, don't need explicit for FTS tables
     @ColumnInfo(name = "code") var code: String = "",
     @ColumnInfo(name = "genus") var genus: String = "",
     @ColumnInfo(name = "species") var species: String = "",
