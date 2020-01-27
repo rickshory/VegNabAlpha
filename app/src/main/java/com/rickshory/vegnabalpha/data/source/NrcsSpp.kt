@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "nrcsspp")
 data class NrcsSpp @JvmOverloads constructor  (
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sppid") var id: Long = 0,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sppid") var id: Int = 0,
     @ColumnInfo(name = "code") var code: String = "",
     @ColumnInfo(name = "genus") var genus: String = "",
     @ColumnInfo(name = "species") var species: String = "",
