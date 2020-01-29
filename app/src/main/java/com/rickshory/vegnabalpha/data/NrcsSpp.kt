@@ -1,9 +1,6 @@
 package com.rickshory.vegnabalpha.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Fts4
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 /**
  * Immutable model class for an NRCS Species record. In order to compile with Room, we can't use @JvmOverloads to
@@ -18,7 +15,7 @@ import androidx.room.PrimaryKey
  *  This is the base table. The virtual table for full text search is 'nrcsspp_fts'
  */
 
-@Entity(tableName = "nrcsspp")
+@Entity(tableName = "nrcsspp", indices = [Index(value = ["code"], unique = true)])
 data class NrcsSpp @JvmOverloads constructor  (
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sppid") var id: Int = 0,
     @ColumnInfo(name = "code") var code: String = "",
