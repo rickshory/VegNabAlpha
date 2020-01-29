@@ -1,5 +1,6 @@
 package com.rickshory.vegnabalpha.data
 
+import androidx.annotation.NonNull
 import androidx.room.*
 
 /**
@@ -18,9 +19,9 @@ import androidx.room.*
 @Entity(tableName = "nrcsspp", indices = [Index(value = ["code"], unique = true)])
 data class NrcsSpp @JvmOverloads constructor  (
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sppid") var id: Int = 0,
-    @ColumnInfo(name = "code") var code: String = "",
-    @ColumnInfo(name = "genus") var genus: String = "",
-    @ColumnInfo(name = "species") var species: String = "",
+    @ColumnInfo(name = "code") @NonNull var code: String = "",
+    @ColumnInfo(name = "genus") @NonNull var genus: String = "",
+    @ColumnInfo(name = "species") @NonNull var species: String = "",
     @ColumnInfo(name = "vernacular") var vernacular: String = ""
 )  {
 }
