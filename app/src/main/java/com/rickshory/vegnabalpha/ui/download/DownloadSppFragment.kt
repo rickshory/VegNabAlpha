@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.rickshory.vegnabalpha.R
 import com.rickshory.vegnabalpha.databinding.FragmentDownloadSppBinding
+import kotlinx.coroutines.Dispatchers
 
 class DownloadSppFragment : Fragment()  {
 
@@ -25,9 +26,13 @@ class DownloadSppFragment : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.downloadBtn.setOnClickListener {
-            // we are going to call Download async task to begin our download
-            val task = DownloadTask(ProgressDialog(applicationContext));
-            task.execute("http://www.rickshory.com/downloads/spplist.txt");
+            Dispatchers.Main.let {
+
+            }
+
+//            // we are going to call Download async task to begin our download
+//            val task = DownloadTask(ProgressDialog(applicationContext));
+//            task.execute("http://www.rickshory.com/downloads/spplist.txt");
         }
     }
 }
