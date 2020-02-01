@@ -12,12 +12,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.rickshory.vegnabalpha.R
 import com.rickshory.vegnabalpha.data.LoginViewModel
 import com.rickshory.vegnabalpha.databinding.FragmentMainBinding
+import kotlinx.coroutines.*
 
 class MainFragment : Fragment() {
 
@@ -47,6 +49,18 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeAuthenticationState()
         binding.authButton.setOnClickListener { launchSignInFlow() }
+        viewLifecycleOwner.lifecycleScope.launch { // context of the parent, main runBlocking coroutine
+            Log.i(TAG,"main runBlocking      : I'm working in thread ${Thread.currentThread().name}")
+        }
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Unconfined) { // not confined -- will work with main thread
+            Log.i(TAG,"Unconfined            : I'm working in thread ${Thread.currentThread().name}")
+        }
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) { // will get dispatched to DefaultDispatcher
+            Log.i(TAG,"Default               : I'm working in thread ${Thread.currentThread().name}")
+        }
+        viewLifecycleOwner.lifecycleScope.launch(newSingleThreadContext("MyOwnThread")) { // will get its own new thread
+            Log.i(TAG,"newSingleThreadContext: I'm working in thread ${Thread.currentThread().name}")
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
